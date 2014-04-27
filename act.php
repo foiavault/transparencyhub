@@ -19,7 +19,7 @@ require_once('includes/header.php');
             <ul class="nav navbar-nav">
                 <li><a href="act.php">FOI Act</a></li>
                 <li><a href="infographics.php">Infographics</a></li>
-                <li><a href="">Requests</a></li>
+                <li><a href="ask.php">Requests</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -27,16 +27,11 @@ require_once('includes/header.php');
     <!-- /.container -->
 </nav>
 <div class="wrapper">
-	<h1>Federal Act</h1>
-	<p class="lead">Information about the Federal Act</p>
-	<div class="main">
-		<section class="sec1">
-
-		</section>
-		<section class="sec2">
-			
-		</section>
-	</div>
+    <h1>Federal Act</h1>
+    <p class="lead">Information about the Federal Act</p>
+    <div class="main">
+        <iframe src="https://view-api.box.com/1/sessions/6155505844464c8eb24a6d127b694f9b/view?theme=light" width="100%" height="800px"/>
+    </div>
 </div>
 <div class="footer">
 </div>

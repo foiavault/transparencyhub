@@ -19,7 +19,7 @@ require_once('includes/header.php');
             <ul class="nav navbar-nav">
                 <li><a href="act.php">FOI Act</a></li>
                 <li><a href="infographics.php">Infographics</a></li>
-                <li><a href="">Requests</a></li>
+                <li><a href="ask.php">Requests</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->

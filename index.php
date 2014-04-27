@@ -1,12 +1,38 @@
 <?php
 require_once('includes/config.php');
+require_once('includes/functions.php');
 require_once('includes/header.php');
 ?>
 <?php
 // Registration Page
 if (isset($_POST['register'])) {
-   $firstname = $_POST['firstname'];
-   $lastname = $_POST['lastname'];
+   $credentials = [
+   'firstname'=>$_POST['firstname'],
+   'lastname'=>$_POST['lastname'],
+   'email'=>$_POST['email'],
+   'department'=>$_POST['department'],
+   'password'=>$_POST['password'],
+   'vpassword'=>$_POST['vpassword']
+   ];
+
+   if($credentials['vpassword'] !== $credentials['password']){
+    $validation_error = "<div class='alert alert-danger>Passwords are not the same</div>";
+   }else{
+       $hashed_pass = better_crypt($credentials['password']);
+
+       try {
+        $query = "INSERT INTO `users` (firstname, lastname, email, department, password) 
+        VALUES ('{$credentials['firstname']}','{$credentials['lastname']}','{$credentials['email']}',
+            '{$credentials['department']}','{$hashed_pass}')";
+
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+       }catch(PDOException $e){
+        echo 'Connection Error: ' . $e->getMessage();
+        }
+
+        $validation_error = "<div class='alert alert-success'>Successfully Registered</div>";
+    }
 }
 ?>
 
@@ -27,7 +53,7 @@ if (isset($_POST['register'])) {
                 <ul class="nav navbar-nav">
                     <li><a href="act.php">FOI Act</a></li>
                     <li><a href="infographics.php">Infographics</a></li>
-                    <li><a href="">Requests</a></li>
+                    <li><a href="ask.php">Requests</a></li>
                     <li><a  class="modalLink" href="#signUp">Sign Up</a>
                     </li>
                     <li><a href="#auth">Sign in</a>
@@ -50,8 +76,8 @@ if (isset($_POST['register'])) {
                         <!-- <h1 class="fa fa-unlock-alt fa-3x"></h1> -->
                         <img src="./assets/img/logo.png" alt="FOIA">
                         <h1>FOIA Vault</h1>
-                        <p>Make your requests to the public authority. By law, they must respond <a href="">(Why?)</a></p>
-                        <form method="post" action="">
+                        <p>Make your requests to the public authority. By law, they must respond <a href="faq.php">(Why?)</a></p>
+                        <form method="post" action="ask.php">
                         <input type="text" id="text1" name="requests" placeholder="Make your request...">
                         <button class="searchbtn" type="submit">
                             <i class="fa fa-3x fa-arrow-circle-right"></i>
@@ -127,9 +153,11 @@ if (isset($_POST['register'])) {
                 </div>
                 <div class="col-lg-6">
                     <ul class="list-inline banner-social-buttons">
-                        <li><a href="https://twitter.com/FOIvault" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                        <li><a href="https://twitter.com/foivaultnig" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
                         </li>
                         <li><a href="https://www.facebook.com/foiavault" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">Facebook</span></a>
+                        </li>
+                        <li><a href="https://github.com/foiavault/transparencyhub" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
                         </li>
                     </ul>
                 </div>
@@ -164,6 +192,9 @@ if (isset($_POST['register'])) {
     <p role="link" class="closeBtn"><img src="./assets/img/exit.png" alt="close"></p>
     <h2>Sign Up (Agents Only)</h2>
     <form method="post" action="" class="reg">
+    <?php if(isset($validation_error)){
+        echo $validation_error;
+    }?>
     <label for="firstname">Firstname: </label><br>
     <input type="text" name="firstname">
     <label for="lastname">Lastname: </label><br>
@@ -181,7 +212,7 @@ if (isset($_POST['register'])) {
     <input type="password" name="password"><br><br>
     <label for="vpassword">Verify Password: </label><br>
     <input type="password" name="vpassword"><br><br>
-    <button name="register" class="btn">Register</button>
+    <button name="register" class="btn btn-info">Register</button>
     </form>
 </div>
 <?php require_once('includes/footer.php'); ?>
