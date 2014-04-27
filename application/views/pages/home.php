@@ -9,15 +9,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand white" href="./">Transparent Hub</a>
+                <a class="navbar-brand white" href="./"><h3><i class="fa fa-unlock-alt"></i> FOIA Vault</h3></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-right navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#about">Sign Up</a>
+                    <li><a href="<?= site_url(); ?>/page/view/act">FOI Act</a></li>
+                    <li><a href="<?= site_url(); ?>/page/view/infographics">Infographics</a></li>
+                    <li><a href="">Requests</a></li>
+                    <li><a  class="modalLink" href="#signUp">Sign Up</a>
                     </li>
-                    <li><a href="#services">Sign in</a>
+                    <li><a href="#auth">Sign in</a>
                     </li>
                 </ul>
             </div>
@@ -26,6 +29,7 @@
         <!-- /.container -->
     </nav>
 
+    <div class="intro-overtake"></div>
     <div class="intro-header">
 
         <div class="container">
@@ -33,10 +37,20 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-message">
-                        <div class="space"></div>
-                        <h2>Transparency Hub</h2>
-                        <input type="text" name="requests" placeholder="Make your request">
+                        <h1 class="fa fa-unlock-alt fa-3x"></h1>
+                        <h1>FOIA Vault</h1>
+                        <p>Search for your Freedom of Information requests</p>
+                        <input type="text" id="reqs" name="requests" placeholder="Make your request...">
+                        <button class="searchbtn" type="submit">
+                            <i class="fa fa-3x fa-arrow-circle-right"></i>
+                        </button>
+                        <script language="javascript" type="text/javascript">
+                        $("#reqs").suggestion({
+                          url:<?= site_url()."/page/view/data/"; ?>
+                        });
+                          </script>
                     </div>
+                    <a href="#content"><img src="/transparencyhub/assets/img/down.png"></a>
                 </div>
             </div>
 
@@ -46,53 +60,31 @@
     </div>
     <!-- /.intro-header -->
 
-    <div class="content-section-a">
+    <div id="content" class="content-section-b">
 
-        <div class="container">
-
-            <div class="row">
-                <div class="col-lg-5 col-sm-6">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <h2 class="section-heading">Death to the Stock Photo:
-                        <br>Special Thanks</h2>
-                    <p class="lead">A special thanks to Death to the Stock Photo for providing the photographs that you see in this template. <a target="_blank" href="http://join.deathtothestockphoto.com/">Visit their website</a> to become a member.</p>
-                </div>
-                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                    <img class="img-responsive" src="/transparencyhub/assets/img/ipad.png" alt="">
-                </div>
-            </div>
-
+        <div class="information">
+            <h1>Recent Requests</h1>
+            <ul class="request-list">
+                <? foreach($requests as $count => $request): ?>
+                <li><?= $request->title; ?> <i class="time"><?= date('F jS \of Y', $request->time); ?></i>
+                    <span class="pull-right btn 
+                    <? if($request->status === 'verified'){
+                        echo "btn-success";
+                    }elseif($request->status === 'pending'){
+                        echo "btn-warning";
+                    }else{
+                        echo "btn-danger";
+                    } ?>"><?= $request->status; ?></span>
+                </li>
+                <?if($count === 11){break;} ?>
+                <? endforeach; ?>
+            </ul>
         </div>
-        <!-- /.container -->
-
-    </div>
-    <!-- /.content-section-a -->
-
-    <div class="content-section-b">
-
-        <div class="container">
-
-            <div class="row">
-                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <h2 class="section-heading">3D Device Mockups
-                        <br>by PSDCovers</h2>
-                    <p class="lead">Turn your 2D designs into high quality, 3D product shots in seconds using free Photoshop actions by PSDCovers! <a target="_blank" href="http://www.psdcovers.com/">Visit their website</a> to download some of their awesome, free photoshop actions!</p>
-                </div>
-                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-                    <img class="img-responsive" src="/transparencyhub/assets/img/doge.png" alt="">
-                </div>
-            </div>
-
-        </div>
-        <!-- /.container -->
 
     </div>
     <!-- /.content-section-b -->
 
-    <div class="content-section-a">
+    <div id="auth" class="content-section-a">
 
         <div class="container">
 
@@ -100,12 +92,13 @@
                 <div class="col-lg-5 col-sm-6">
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
-                    <h2 class="section-heading">Google Web Fonts and
-                        <br>Font Awesome Icons</h2>
-                    <p class="lead">This template features the 'Lato' font, part of the <a target="_blank" href="http://www.google.com/fonts">Google Web Font library</a>, as well as <a target="_blank" href="http://fontawesome.io">icons from Font Awesome</a>.</p>
+                    <h2 class="section-heading">Agent Sign In</h2>
+                    <p class="lead"><input type="text" name="uname" placeholder="Username"></p>
+                    <p class="lead"><input type="password" name="pwd" placeholder="password"></p>
+                    <button class="btn btn-primary">Sign In</button>
                 </div>
                 <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                    <img class="img-responsive" src="/transparencyhub/assets/img/phones.png" alt="">
+                    <img class="img-responsive" src="/transparencyhub/assets/img/lock3.png" alt="">
                 </div>
             </div>
 
@@ -121,15 +114,13 @@
 
             <div class="row">
                 <div class="col-lg-6">
-                    <h2>Connect to Start Bootstrap:</h2>
+                    <h2>Connect to our social media:</h2>
                 </div>
                 <div class="col-lg-6">
                     <ul class="list-inline banner-social-buttons">
-                        <li><a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                        <li><a href="https://twitter.com/FOIvault" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
                         </li>
-                        <li><a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
-                        </li>
-                        <li><a href="#" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a>
+                        <li><a href="https://www.facebook.com/foiavault" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">Facebook</span></a>
                         </li>
                     </ul>
                 </div>
@@ -146,21 +137,43 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="list-inline">
-                        <li><a href="#home">Home</a>
+                        <li><a href="#home">FOI Act</a>
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
-                        <li><a href="#about">About</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li><a href="#services">Services</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li><a href="#contact">Contact</a>
-                        </li>
+                        <li><a href="#about">Requests</a>
                     </ul>
-                    <p class="copyright text-muted small">Copyright &copy; Your Company 2013. All Rights Reserved</p>
+                    <p class="copyright text-muted small">Copyright &copy; Transparent Hub 2014. All Rights Reserved</p>
                 </div>
             </div>
         </div>
     </footer>
 
+<!-- Modal -->
+<div class="overlay"></div>
+
+<div id="signUp" class="modal">
+    <p role="link" class="closeBtn"><img src="/transparencyhub/assets/img/exit.png" alt="close"></p>
+    <h2>Sign Up (Agents Only)</h2>
+    <? $attributes = ['class' => 'reg']; ?>
+    <?= form_open('page/register',$attributes); ?>
+    <div class="errors"><?= validation_errors(); ?></div>
+    <label for="firstname">Firstname: </label><br>
+    <input type="text" name="firstname">
+    <label for="lastname">Lastname: </label><br>
+    <input type="text" name="lastname">
+    <label for="email">Email: </label><br>
+    <input type="email" name="email">
+    <label for="department">Department: </label><br>
+    <select name="department">
+        <option>- select a department -</option>
+        <option>Ministry of Finance</option>
+        <option>Military</option>
+        <option>Police Federation of Nigeria</option>
+    </select>
+    <label for="password">Password: </label><br>
+    <input type="password" name="password"><br><br>
+    <label for="vpassword">Verify Password: </label><br>
+    <input type="password" name="vpassword"><br><br>
+    <button class="btn">Register</button>
+    <?= form_close(); ?>
+</div>

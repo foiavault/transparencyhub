@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/transparencyhub/';
+$config['base_url']	= 'http://localhost/transparencyhub';
 
 
 /*
@@ -225,7 +225,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'mke414@03rk%39&%$#%ff^&gr8*jo3(f';
 
 /*
 |--------------------------------------------------------------------------
